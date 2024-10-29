@@ -69,7 +69,13 @@ class DatabaseConnection(object):
 
     def execute(self, sql, values=None):
         cursor = self._db.cursor()
-        if isinstance(values, (basestring, unicode)):
+
+        try:
+            basestring
+        except NameError:
+            basestring = str
+
+        if isinstance(values, (str, basestring)):
             values = (values,)
         cursor.execute(sql, values)
 
